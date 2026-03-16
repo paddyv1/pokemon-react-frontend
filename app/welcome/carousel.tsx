@@ -19,7 +19,6 @@ import water from "./typesvgs/water.svg";
 import "./carousel.css";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useRef } from "react";
 import { index } from "@react-router/dev/routes";
 const types = [
   { name: "bug", src: bug },
