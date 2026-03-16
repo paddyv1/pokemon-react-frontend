@@ -1,4 +1,3 @@
-import { posix } from "path";
 import bug from "./typesvgs/bug.svg";
 import dark from "./typesvgs/dark.svg";
 import dragon from "./typesvgs/dragon.svg";
@@ -19,7 +18,9 @@ import steel from "./typesvgs/steel.svg";
 import water from "./typesvgs/water.svg";
 import "./carousel.css";
 import useEmblaCarousel from "embla-carousel-react";
-
+import AutoScroll from "embla-carousel-auto-scroll";
+import { useRef } from "react";
+import { index } from "@react-router/dev/routes";
 const types = [
   { name: "bug", src: bug },
   { name: "dark", src: dark },
@@ -41,27 +42,42 @@ const types = [
   { name: "water", src: water },
 ];
 
-const looped = [...types];
+const looptypes = [...types, ...types, ...types];
 
 export default function Carousel() {
-  const [emblaRef] = useEmblaCarousel();
+  const [emblaRef] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "start",
+      dragFree: true,
+    },
+    [
+      AutoScroll({
+        speed: 0.25, // lower = slower, higher = faster
+        startDelay: 0,
+        playOnInit: true,
+        stopOnInteraction: false,
+        stopOnMouseEnter: false, // pause on hover
+        stopOnFocusIn: false,
+      }),
+    ],
+  );
+
   return (
-    <>
-      <div className="embla">
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="embla__container">
-            {looped.map((type, index) => (
-              <div key={type.name + index} className="embla__slide">
-                <img
-                  src={type.src}
-                  alt={type.name + " type icon"}
-                  className="h-15 w-15 object-contain"
-                />
-              </div>
-            ))}
-          </div>
+    <div className="embla">
+      <div className="embla__viewport" ref={emblaRef}>
+        <div className="embla__container">
+          {looptypes.map((type) => (
+            <div key={type.name + "-" + index} className="embla__slide">
+              <img
+                src={type.src}
+                alt={type.name}
+                className="h-20 w-22 object-contain"
+              />
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
