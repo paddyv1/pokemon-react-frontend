@@ -23,8 +23,6 @@ export function Welcome() {
         Collaborate Live with Friends to create teams which can be exported into
         a Pokemon Showdown
       </div>
-      <div className="bg-blue-400 h-100">06</div>
-      <div className="col-span-2 bg-blue-800 h-100">07</div>
     </div>
   );
 }
