@@ -1,9 +1,9 @@
 import { NavLink, Outlet } from "react-router";
 import { useState } from "react";
 
-let linkClicked = false;
-
 export default function Minigame() {
+  const showIntro = location.pathname === "/minigames";
+
   return (
     <>
       <p>Minigames Page</p>
@@ -14,6 +14,7 @@ export default function Minigame() {
         Type Match Up
       </NavLink>
       <div className="mt-2">
+        {showIntro && <p>Games will show here</p>}
         <Outlet />
       </div>
     </>
