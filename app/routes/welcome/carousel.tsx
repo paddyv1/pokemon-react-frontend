@@ -19,8 +19,6 @@ import water from "./typesvgs/water.svg";
 import "./carousel.css";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useRef } from "react";
-import { index } from "@react-router/dev/routes";
 const types = [
   { name: "bug", src: bug },
   { name: "dark", src: dark },
@@ -68,11 +66,11 @@ export default function Carousel() {
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {looptypes.map((type) => (
-            <div key={type.name + "-" + index} className="embla__slide">
+            <div key={type.name} className="embla__slide">
               <img
                 src={type.src}
                 alt={type.name}
-                className="h-20 w-22 object-contain"
+                className="svg-image h-35 w-22 object-contain"
               />
             </div>
           ))}

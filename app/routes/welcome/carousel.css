@@ -10,10 +10,15 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  touch-action: pan-y pinch-zoom;
 }
 
 .embla__slide {
   flex: 0 0 auto;
   min-width: 0;
+}
+
+.svg-image:hover {
+  transform: scale(1.2);
+  transition: 50ms linear;
+  translate: 0px 0px 20px;
 }
