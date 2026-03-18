@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
+import useAuth from "../auth/authprovider";
 
 type NavItem = {
   label: string;
@@ -23,6 +24,8 @@ function navLinkClassName({ isActive }: { isActive: boolean }) {
 }
 
 export function Navbar() {
+  const { user, loading, logout } = useAuth();
+
   return (
     <header className="flex items-center justify-between px-4 py-3 bg-red-300/80 backdrop-blur font-mono">
       <div className="shrink-0">
@@ -44,7 +47,30 @@ export function Navbar() {
           ))}
         </nav>
       </div>
-      <div className="shrink-0">Profile Picture Temp</div>
+      <div className="shrink-0">
+        {user ? (
+          /* ---- Logged-in state ---- */
+          <div className="profile-menu">
+            <img
+              src={user.profile_picture || "/default-avatar.png"}
+              alt={user.username}
+              className="avatar"
+            />
+            <span>{user.username}</span>
+            <button onClick={logout}>Log out</button>
+          </div>
+        ) : (
+          /* ---- Logged-out state ---- */
+          <div className="auth-buttons">
+            <Link to="/login">
+              <button>Sign In</button>
+            </Link>
+            <Link to="/signup">
+              <button>Sign Up</button>
+            </Link>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

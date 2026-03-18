@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import { Navbar } from "./components/navbar/navbar";
 import "./app.css";
 import Footer from "./components/footer/footer";
+import { AuthProvider } from "./components/auth/authprovider";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -46,13 +47,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <div className="grow">
-          <Outlet />
+      <AuthProvider>
+        <div className="min-h-screen flex flex-col">
+          <Navbar />
+          <div className="grow">
+            <Outlet />
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </AuthProvider>
     </>
   );
 }
