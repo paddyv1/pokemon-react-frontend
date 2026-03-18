@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import useAuth from "../auth/authprovider";
-
+import default_profile_pic from "../../resources/default-avatar.png";
 type NavItem = {
   label: string;
   to: string;
@@ -52,7 +52,7 @@ export function Navbar() {
           /* ---- Logged-in state ---- */
           <div className="profile-menu">
             <img
-              src={user.profile_picture || "/default-avatar.png"}
+              src={user.profile_picture || default_profile_pic}
               alt={user.username}
               className="avatar"
             />
@@ -61,12 +61,12 @@ export function Navbar() {
           </div>
         ) : (
           /* ---- Logged-out state ---- */
-          <div className="auth-buttons">
-            <Link to="/login">
-              <button>Sign In</button>
+          <div className="auth-buttons flex">
+            <Link to="/login" className="flex">
+              <button className="flex">Sign In</button>
             </Link>
-            <Link to="/signup">
-              <button>Sign Up</button>
+            <Link to="/signup" className="flex">
+              <button className="flex">Sign Up</button>
             </Link>
           </div>
         )}

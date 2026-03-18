@@ -2,23 +2,28 @@ import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
 import useAuth from "~/components/auth/authprovider";
-import { ApiError } from "~/services/api";
+import axios from "axios";
 
 function getErrorMessage(error: unknown): string {
-  if (error instanceof ApiError) {
-    if (typeof error.data === "object" && error.data !== null) {
-      const maybeDetail = (error.data as { detail?: unknown }).detail;
-      if (typeof maybeDetail === "string" && maybeDetail.length > 0) {
-        return maybeDetail;
+  if (axios.isAxiosError(error)) {
+    const data = error.response?.data;
+    if (typeof data === "object" && data !== null) {
+      const detail = (data as { detail?: unknown }).detail;
+      if (typeof detail === "string" && detail.length > 0) {
+        return detail;
       }
 
-      const maybeMessage = (error.data as { message?: unknown }).message;
-      if (typeof maybeMessage === "string" && maybeMessage.length > 0) {
-        return maybeMessage;
+      const message = (data as { message?: unknown }).message;
+      if (typeof message === "string" && message.length > 0) {
+        return message;
       }
     }
 
     return error.message || "Login failed";
+  }
+
+  if (error instanceof Error && error.message) {
+    return error.message;
   }
 
   return "Login failed";

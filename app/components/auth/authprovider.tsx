@@ -5,17 +5,18 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import api from "~/services/api";
-
+import apiClient from "~/services/api/apiClient";
+import { authService } from "~/services/api/authService";
+import { type User } from "~/types/auth/auth";
 // ---------- Types ----------
 
-interface User {
-  id: number;
-  username: string;
-  password: string;
-  profile_picture?: string;
-  // add any other fields your /auth/me endpoint returns
-}
+//interface User {
+//id: number;
+//username: string;
+//password: string;
+//profile_picture?: string;
+// add any other fields your /auth/me endpoint returns
+//}
 
 interface AuthContextType {
   user: User | false | null; // null = unknown, false = logged out, User = logged in
@@ -44,9 +45,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    api
-      .get<User>("/auth/me")
-      .then((res) => setUser(res))
+    authService
+      .getMe()
+      .then((response) => setUser(response.data))
       .catch(() => {
         localStorage.removeItem("access_token");
         setUser(false);
@@ -55,26 +56,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (username: string, password: string): Promise<void> => {
-    const form = new URLSearchParams();
-    form.set("username", username);
-    form.set("password", password); // optional unless your backend enforces it
-
-    const res = await api.postForm<{ access_token: string; user: User }>(
-      "/auth/login",
-      form,
-    );
-
-    localStorage.setItem("access_token", res.access_token);
-    setUser(res.user);
+    authService
+      .login(username, password)
+      .then((res) => {
+        setUser(res.data.user);
+        localStorage.setItem("access_token", res.data.access_token);
+      })
+      .finally(() => setLoading(false));
   };
 
   const signup = async (username: string, password: string): Promise<void> => {
-    const res = await api.post<{ access_token: string; user: User }>(
-      "/auth/register",
-      { username, password },
-    );
-    localStorage.setItem("access_token", res.access_token);
-    setUser(res.user);
+    authService.signUp(username, password).then((res) => {
+      setUser(res.data.user);
+      localStorage.setItem("access_token", res.data.access_token);
+    });
   };
 
   const logout = (): void => {
