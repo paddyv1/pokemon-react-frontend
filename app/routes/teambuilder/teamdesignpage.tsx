@@ -1,7 +1,7 @@
 export default function TeamDesignComponent() {
   return (
     <>
-      <div className="grid grid-cols-5 grid-rows-5 gap-4 bg-red-600">
+      <div className="grid grid-cols-5 grid-rows-5 gap-4 bg-red-600 h-80">
         <div className="col-start-1 row-start-2 bg-blue-400">Slot 1</div>
         <div className="col-start-2 row-start-2 bg-blue-400">Slot 2</div>
         <div className="col-start-1 row-start-3 bg-blue-400">Slot 3</div>
