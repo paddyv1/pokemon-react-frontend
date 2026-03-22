@@ -56,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (username: string, password: string): Promise<void> => {
-    authService
+    await authService
       .login(username, password)
       .then((res) => {
         setUser(res.data.user);
@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signup = async (username: string, password: string): Promise<void> => {
-    authService.signUp(username, password).then((res) => {
+    await authService.signUp(username, password).then((res) => {
       setUser(res.data.user);
       localStorage.setItem("access_token", res.data.access_token);
     });

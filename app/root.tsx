@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="font-mono">
+      <body className="font-mono bg-blue-600">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -50,7 +50,7 @@ export default function App() {
       <AuthProvider>
         <div className="min-h-screen flex flex-col">
           <Navbar />
-          <div className="grow">
+          <div className="grow ">
             <Outlet />
           </div>
           <Footer />

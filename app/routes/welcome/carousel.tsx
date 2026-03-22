@@ -40,7 +40,7 @@ const types = [
   { name: "water", src: water },
 ];
 
-const looptypes = [...types, ...types, ...types];
+const looptypes = [...types, ...types];
 
 export default function Carousel() {
   const [emblaRef] = useEmblaCarousel(
