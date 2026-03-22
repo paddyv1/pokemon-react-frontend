@@ -7,7 +7,7 @@ export default function ListChoice() {
   const api = new PokemonClient(); // create a PokemonClient
 
   const res = api
-    .getPokemonById(1)
+    .getPokemonById(987)
     .then((res) => {
       UpdatePokemon(res.sprites.front_default);
     })
@@ -19,7 +19,7 @@ export default function ListChoice() {
         <div className="flex justify-center">Team Name</div>
         <div className="grid grid-cols-3 grid-rows-2 gap-5">
           <div className="">
-            <img src={pokemonName} />
+            {pokemonName ? <img src={pokemonName} /> : <p>No Sprite Set</p>}
           </div>
           <div>Sprite 2</div>
           <div>Sprite 3</div>
